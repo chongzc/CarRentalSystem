@@ -132,9 +132,10 @@ public class Main {
     	int customerContact = scanner.nextInt();
     	System.out.println("Enter customer license:");
     	String customerLicense = scanner.nextLine();
+    	scanner.nextLine();
     	
     	//duratjtion 
-    	System.out.println("Enter rental start time");
+    	System.out.println("Enter rental start time(YYYY-MM-DD:");
     	String startRenting = scanner.nextLine();
     	System.out.println("Renting duration(day):");
     	int RentingDuration = scanner.nextInt();
