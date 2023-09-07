@@ -17,7 +17,7 @@ public class Menu {
         System.out.println( "1 - Add a car");
         System.out.println( "2 - Display cars");
         System.out.println( "3 - Remove a car");
-        System.out.println( "4 - Update car status");
+        System.out.println( "4 - Update car status");//x yet done
         System.out.println( "5 - Quit");
         System.out.print  ( "Your choice: ");
     }
