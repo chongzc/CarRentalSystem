@@ -121,6 +121,27 @@ public class Main {
     }
         
     public static void RentCar() {
+    	Scanner scanner = new Scanner(System.in);
+    	
+    	//customer's details
+    	System.out.println("Enter customer's name:");
+    	String customerName = scanner.nextLine();
+    	System.out.println("Enter customer I/C number:");
+    	String customerIC = scanner.nextLine();
+    	System.out.println("Enter customer contact number:");
+    	int customerContact = scanner.nextInt();
+    	System.out.println("Enter customer license:");
+    	String customerLicense = scanner.nextLine();
+    	
+    	//duratjtion 
+    	System.out.println("Enter rental start time");
+    	String startRenting = scanner.nextLine();
+    	System.out.println("Renting duration(day):");
+    	int RentingDuration = scanner.nextInt();
+    	
+    	
+    	
+    	
     	System.out.println("The car had been successful rented");//x yet finish
         }
 
