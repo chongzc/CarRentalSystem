@@ -22,22 +22,21 @@ public class Main {
             }
         }//login and verification
 
-        if (isVerified) {//when login session been verified 
-            Menu.MainMenu();//show the main menu from Menu class
-            int mainMenuChoice = scanner.nextInt();
-            scanner.nextLine();
 
-            switch (mainMenuChoice) {
-                case 1:
-                    CarManager(scanner); // Pass scanner to CarManager
-                    break;
-                case 2:
-                    Booking();
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please select a valid option.");
-                    break;
-            }
+        Menu.MainMenu();//show the main menu from Menu class
+        int mainMenuChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (mainMenuChoice) {
+            case 1:
+                CarManager(scanner); // Pass scanner to CarManager
+                break;
+            case 2:
+                Booking();
+                break;
+            default:
+                System.out.println("Invalid choice. Please select a valid option.");
+                break;
         }
 
         scanner.close();
