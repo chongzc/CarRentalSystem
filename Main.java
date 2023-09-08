@@ -1,46 +1,28 @@
-package CarRentalSystem;
 import java.io.*;
 import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
-        boolean isVerified = false;
-        Scanner scanner = new Scanner(System.in);
-
-        while (!isVerified) {
-            System.out.print("Welcome to Car Rental System\n");
-            System.out.print("Enter username: ");
-            String enteredUsername = scanner.nextLine();
-            System.out.print("Enter password: ");
-            String enteredPassword = scanner.nextLine();
-
-            if (enteredUsername.equals(User.getUsername()) && enteredPassword.equals(User.getPassword())) {
-                isVerified = true;
-                System.out.println("Login successfully!\n");
-            } else {
-                System.out.println("Wrong username or password! Try again.");
-            }
-        }//login and verification
-
-
+    	Menu.Login();
+    	Scanner scanner = new Scanner(System.in);
         Menu.MainMenu();//show the main menu from Menu class
         int mainMenuChoice = scanner.nextInt();
         scanner.nextLine();
-
+        
         switch (mainMenuChoice) {
-            case 1:
-                CarManager(scanner); // Pass scanner to CarManager
-                break;
-            case 2:
-                Booking();
-                break;
-            default:
-                System.out.println("Invalid choice. Please select a valid option.");
-                break;
+        case 1:
+    		CarManager(scanner); // Pass scanner to CarManager
+            break;
+        case 2:
+            Booking();
+            break;
+        default:
+            System.out.println("Invalid choice. Please select a valid option.");
+            break;
         }
-
-        scanner.close();
-    }
+            scanner.close();
+     }
+        
 
     public static void CarManager(Scanner scanner) {
         ArrayList<CarManager> cars = new ArrayList<CarManager>();
@@ -107,10 +89,10 @@ public class Main {
 
         switch (BookingMenuChoice) {
             case 1:
-                RentCar();
+                BookingManagement.RentCar();
                 break;
             case 2:
-                CancelBooking();
+                BookingManagement.CancelBooking();
                 break;
             default:
                 System.out.println("Invalid choice. Please select a valid option.");
@@ -118,24 +100,5 @@ public class Main {
         }
     }
 
-    public static void RentCar() {
-        Scanner scanner = new Scanner(System.in);
-
-        //customer's details
-        System.out.println("Enter customer's name:");
-        String customerName = scanner.nextLine();
-        System.out.println("Enter customer I/C number:");
-        String customerIC = scanner.nextLine();
-        System.out.println("Enter customer contact number:");
-        int customerContact = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Enter customer license:");
-        String customerLicense = scanner.nextLine();
-        // ...
-        System.out.println("The car has been successfully rented.");
-    }
-
-    public static void CancelBooking() {
-        System.out.println("Booking has been canceled.");
-    }
+    
 }
