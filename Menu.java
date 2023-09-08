@@ -1,4 +1,5 @@
-package CarRentalSystem;
+import java.util.*;
+
 public class Menu {
 	
 	public static void MainMenu() {
@@ -27,4 +28,24 @@ public class Menu {
         System.out.println( "3 - Quit");
         System.out.print  ( "Your choice: ");
     }
+	
+	public static void Login(){
+		 boolean isVerified = false;
+	        Scanner scanner = new Scanner(System.in);
+
+	        while (!isVerified) {
+	            System.out.print("Welcome to Car Rental System\n");
+	            System.out.print("Enter username: ");
+	            String enteredUsername = scanner.nextLine();
+	            System.out.print("Enter password: ");
+	            String enteredPassword = scanner.nextLine();
+
+	            if (enteredUsername.equals(User.getUsername()) && enteredPassword.equals(User.getPassword())) {
+	                isVerified = true;
+	                System.out.println("Login successfully!\n");
+	            } else {
+	                System.out.println("Wrong username or password! Try again.");
+	            }
+	        }//login and verification
+	}
 }
