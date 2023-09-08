@@ -5,16 +5,16 @@ import java.util.Scanner;
 
 public class BookingManagement 
 {
-    private ArrayList<Customer> customers;
-    public long durationInDays;
-    public String startBook;
-    public String endBook;
+    public static  ArrayList<Customer> customers;
+    public static  long durationInDays;
+    public static  String startBook;
+    public static  String endBook;
     
     public BookingManagement() {
         customers = new ArrayList<>();
     }
 
-    public void registerCustomer(String customerName, String customerIC, String customerContact, String customerLicense) {
+    public static void registerCustomer(String customerName, String customerIC, String customerContact, String customerLicense) {
         Customer customer = new Customer(customerName, customerIC, customerContact, customerLicense);
         customers.add(customer);
         System.out.println("Customer registered successfully!");
@@ -23,8 +23,20 @@ public class BookingManagement
     public ArrayList<Customer> getAllCustomers() {
         return customers;
     }
+    
+    public String getStartBook()
+    {
+    	return startBook;
+    }
+    
+    public String getEndBook()
+    {
+    	return endBook;
+    }
+    
+    
 
-    public void registerCustomer() {
+    public static void registerCustomer() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Customer Registration");
@@ -48,7 +60,7 @@ public class BookingManagement
         System.out.println("Customer registered successfully!");
     }
     
-    public void calculateDateDuration() {
+    public static void getDateDuration() {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter the date start booking (dd/mm/yyyy): ");
@@ -76,22 +88,7 @@ public class BookingManagement
         scanner.close();
     }
     
-    public static void RentCar() {
-        Scanner scanner = new Scanner(System.in);
-
-        //customer's details
-        System.out.println("Enter customer's name:");
-        String customerName = scanner.nextLine();
-        System.out.println("Enter customer I/C number:");
-        String customerIC = scanner.nextLine();
-        System.out.println("Enter customer contact number:");
-        int customerContact = scanner.nextInt();
-        scanner.nextLine();
-        System.out.println("Enter customer license:");
-        String customerLicense = scanner.nextLine();
-        // ...
-        System.out.println("The car has been successfully rented.");
-    }
+    
 
     public static void CancelBooking() {
         System.out.println("Booking has been canceled.");
