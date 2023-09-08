@@ -75,6 +75,25 @@ public class BookingManagement
 
         scanner.close();
     }
+    
+    public static void RentCar() {
+        Scanner scanner = new Scanner(System.in);
 
+        //customer's details
+        System.out.println("Enter customer's name:");
+        String customerName = scanner.nextLine();
+        System.out.println("Enter customer I/C number:");
+        String customerIC = scanner.nextLine();
+        System.out.println("Enter customer contact number:");
+        int customerContact = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Enter customer license:");
+        String customerLicense = scanner.nextLine();
+        // ...
+        System.out.println("The car has been successfully rented.");
+    }
 
+    public static void CancelBooking() {
+        System.out.println("Booking has been canceled.");
+    }
 }
