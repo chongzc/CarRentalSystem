@@ -4,10 +4,10 @@ public class Customer
 {
 	private String customerName;
 	private String customerIC;
-	private int customerContact;
+	private String customerContact;
 	private String customerLicense;
 	
-	Customer(String customerName,String customerIC, int customerContact, String customerLicense)
+	Customer(String customerName,String customerIC, String customerContact, String customerLicense)
 	{
 		this.customerName = customerName;
 		this.customerIC = customerIC;
@@ -35,12 +35,12 @@ public class Customer
 		this.customerIC = customerIC;
 	}
 	
-	public int getCustomerContact()
+	public String getCustomerContact()
 	{
 		return customerContact;
 	}
 	
-	public void setCustomerContact(int customerContact)
+	public void setCustomerContact(String customerContact)
 	{
 		this.customerContact = customerContact;
 	}
