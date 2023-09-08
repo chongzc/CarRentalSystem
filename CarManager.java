@@ -1,4 +1,3 @@
-package CarRentalSystem;
 import java.util.*;
 import java.io.*;
 
@@ -69,7 +68,7 @@ public class CarManager {
         carStatus = status;
     }
 
-    public static void addCar(Scanner input, ArrayList<CarManager> cars, File1 carFileManager) {
+    public static void addCar(Scanner input, ArrayList<CarManager> cars, FileManagement carFileManager) {
         System.out.println("Enter Car Details:");
         System.out.print("Model: ");
         String carModel = input.nextLine();
@@ -98,26 +97,61 @@ public class CarManager {
             System.out.println("Error saving data to file: " + e.getMessage());
         }
     }
+    
+    public static void displayCars(String filePath) {
+        String line = "";
 
-    public static void removeCar(Scanner input, ArrayList<CarManager> cars, File1 carFileManager) {
-        System.out.print("Enter the model of the car to remove: ");
-        String modelToRemove = input.nextLine();
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-15s || %-13s || %-15s || %-13s || %-15s || %-13s || %-13s%n","Model", "Seat", "Plate No", "Power", "Engine", "Category", "Rate/Day");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(filePath));
+
+            while ((line = br.readLine()) != null) {
+                String[] carData = line.split(",");
+                if (carData.length == 8) {
+                    String model = carData[0].trim();
+                    String seats = carData[1].trim();
+                    String plateno = carData[2].trim();
+                    String power = carData[3].trim();
+                    String engine = carData[4].trim();
+                    String category = carData[5].trim();
+                    String rate = carData[6].trim();
+                   
+
+                    System.out.printf("%-15s || %-13s || %-15s || %-13s || %-15s || %-13s || %.2f%n", model, seats, plateno, power, engine, category, Double.parseDouble(rate));
+                }
+            }
+            br.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
+    }
+
+    public static void removeCar(Scanner input, ArrayList<CarManager> cars, FileManagement carFileManager) {
+        System.out.print("/n/nEnter the plate number of the car to remove: ");
+        String carToRemove = input.nextLine();
 
         boolean removed = false;
 
         Iterator<CarManager> iterator = cars.iterator();
         while (iterator.hasNext()) {
             CarManager car = iterator.next();
-            if (car.getModel().equalsIgnoreCase(modelToRemove)) {
+            if (car.getPlateno().equalsIgnoreCase(carToRemove)) {
                 iterator.remove();
-                System.out.println("Car removed successfully.");
+                System.out.println("Car removed successfully./n");
                 removed = true;
                 break;
             }
         }
 
         if (!removed) {
-            System.out.println("Car not found in the list.");
+            System.out.println("Car not found in the list./n");
         }
 
         carFileManager.setListOfCars(cars);
@@ -128,18 +162,31 @@ public class CarManager {
         }
     }
 
-    public static void displayCarDetails(CarManager car) {
-        System.out.println("Car Model: " + car.getModel());
-        System.out.println("Seats: " + car.getSeats());
-        System.out.println("Plateno: " + car.getPlateno());
-        System.out.println("Power: " + car.getPower());
-        System.out.println("Engine: " + car.getEngine());
-        System.out.println("Category: " + car.getCategory());
-        System.out.println("Rate/Day: " + car.getRate());
-        System.out.println("Status: " + car.getStatus());
-        System.out.println();
-    }
+    public static void searchCar(Scanner input, ArrayList<CarManager> cars) {
+        System.out.println("Search for a Car:");
+        System.out.print("Enter Car Model (Press Enter to skip): ");
+        String searchModel = input.nextLine();
+        System.out.print("Enter Number of Seats (Press Enter to skip): ");
+        String seatsInput = input.nextLine().trim();
 
+        boolean found = false;
+    	System.out.println("------------------------------------------------------------------------------------------------------------------------------");
+    	System.out.printf("%-15s || %-13s || %-15s || %-13s || %-15s || %-13s || %-13s || %-8s%n", "PlateNo", "Status", "Model", "Seat", "Power", "Engine", "Category", "Rate/Day");
+    	System.out.println("------------------------------------------------------------------------------------------------------------------------------");
+        for (CarManager car : cars) {
+            boolean modelMatch = searchModel.isEmpty() || car.getModel().toLowerCase().contains(searchModel.toLowerCase()); boolean seatsMatch = seatsInput.isEmpty() || Integer.toString(car.getSeats()).equals(seatsInput);
+
+            if (modelMatch && seatsMatch) {
+            	System.out.printf("%-15s || %-13s || %-15s || %-13s || %-15s || %-13s || %-13s || %.2f%n", car.getPlateno(), car.getStatus(), car.getModel(), car.getSeats(), car.getPower(), car.getEngine(), car.getCategory(), car.getRate());
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No matching cars found.");
+        }
+    }
+    
     public static void updateStatus(Scanner input, ArrayList<CarManager> cars) {
         System.out.println("-----------------------------------------------------------------------");
         System.out.printf("%-15s || %-15s || %-15s%n", "Car Model", "Car Plate No", "Car Status");
@@ -150,7 +197,7 @@ public class CarManager {
         }
 
         System.out.println("-----------------------------------------------------------------------");
-        System.out.print("Enter the car plate no to change the car status: ");
+        System.out.print("Enter the car plate number to change the car status: ");
         String plateNoToUpdate = input.nextLine();
 
         boolean updated = false;
@@ -183,27 +230,5 @@ public class CarManager {
         }
     }
 
-    public static void searchCar(Scanner input, ArrayList<CarManager> cars) {
-        System.out.println("Search for a Car:");
-        System.out.print("Enter Car Model (Press Enter to skip): ");
-        String searchModel = input.nextLine();
-        System.out.print("Enter Number of Seats (Press Enter to skip): ");
-        String seatsInput = input.nextLine().trim();
-
-        boolean found = false;
-
-        for (CarManager car : cars) {
-            boolean modelMatch = searchModel.isEmpty() || car.getModel().toLowerCase().contains(searchModel.toLowerCase()); boolean seatsMatch = seatsInput.isEmpty() || Integer.toString(car.getSeats()).equals(seatsInput);
-
-            if (modelMatch && seatsMatch) {
-                displayCarDetails(car);
-                found = true;
-            }
-        }
-
-        if (!found) {
-            System.out.println("No matching cars found.");
-        }
-    }
 
 }
