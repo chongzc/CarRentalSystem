@@ -1,12 +1,12 @@
-package CarRentalSystem;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
-public class File1 {
+public class FileManagement {
     private ArrayList<CarManager> carsList = new ArrayList<CarManager>();
     private File carFile;
 
-    public File1(String carFile) {
+    public FileManagement(String carFile) {
         this.carFile = new File(carFile);
     }
 
@@ -66,39 +66,10 @@ public class File1 {
         }
     }
 
+    
 
-    public static void displayCars(String filePath) {
-        String line = "";
-
-        System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
-        System.out.printf("%-15s || %-13s || %-15s || %-13s || %-15s || %-13s || %-13s%n","Model", "Seat", "Plate No", "Power", "Engine", "Category", "Rate/Day");
-        System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(filePath));
-
-            while ((line = br.readLine()) != null) {
-                String[] carData = line.split(",");
-                if (carData.length == 8) {
-                    String model = carData[0].trim();
-                    String seats = carData[1].trim();
-                    String plateno = carData[2].trim();
-                    String power = carData[3].trim();
-                    String engine = carData[4].trim();
-                    String category = carData[5].trim();
-                    String rate = carData[6].trim();
-                   
-
-                    System.out.printf("%-15s || %-13s || %-15s || %-13s || %-15s || %-13s || %.2f%n", model, seats, plateno, power, engine, category, Double.parseDouble(rate));
-                }
-            }
-            br.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+    
+}
         System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
     }
 }
