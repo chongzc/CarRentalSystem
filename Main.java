@@ -1,5 +1,4 @@
-package TestRun;
-
+package CarRentalSystem;
 import java.io.*;
 import java.util.*;
 
@@ -30,7 +29,7 @@ public class Main {
 
             switch (mainMenuChoice) {
                 case 1:
-                    CarManager();
+                    CarManager(scanner); // Pass scanner to CarManager
                     break;
                 case 2:
                     Booking();
@@ -40,13 +39,12 @@ public class Main {
                     break;
             }
         }
-        
+
         scanner.close();
     }
 
-    public static void CarManager() {
+    public static void CarManager(Scanner scanner) {
         ArrayList<CarManager> cars = new ArrayList<CarManager>();
-        Scanner input = new Scanner(System.in);
         String relativeFilePath = "car.txt";
         String workingDirectory = System.getProperty("user.dir");
         String absoluteFilePath = workingDirectory + File.separator + relativeFilePath;
@@ -55,7 +53,7 @@ public class Main {
 
         try {
             carFileManager.loadFromFile();
-            cars = carFileManager.getListOfCars(); 
+            cars = carFileManager.getListOfCars();
         } catch (IOException e) {
             System.out.println("Error loading data from file: " + e.getMessage());
         }
@@ -65,20 +63,26 @@ public class Main {
         while (continueManagingCars) {
             Menu.CarMenu();
 
-            int choice = input.nextInt();
-            input.nextLine();
+            int choice = scanner.nextInt();
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
-                    CarManager.addCar(input, cars, carFileManager);
+                    CarManager.addCar(scanner, cars, carFileManager);
                     break;
                 case 2:
                     File1.displayCars(absoluteFilePath);
                     break;
                 case 3:
-                    CarManager.removeCar(input, cars, carFileManager);
+                    CarManager.removeCar(scanner, cars, carFileManager);
                     break;
                 case 4:
+                    CarManager.searchCar(scanner, cars);
+                    break;
+                case 5:
+                    CarManager.updateStatus(scanner, cars); // Update Car Status
+                    break;
+                case 6:
                     continueManagingCars = false;
                     break;
                 default:
@@ -87,23 +91,19 @@ public class Main {
             }
         }
 
-        input.close();
-
-        carFileManager.setListOfCars(cars); 
-        try 
-        {
-            carFileManager.saveToFile(); 
-        } catch (IOException e) 
-        {
+        carFileManager.setListOfCars(cars);
+        try {
+            carFileManager.saveToFile();
+        } catch (IOException e) {
             System.out.println("Error saving data to file: " + e.getMessage());
         }
     }
-    
+
     public static void Booking() {
-    	Scanner scanner = new Scanner(System.in);
-    	Menu.BookingMenu();
-    	
-		int BookingMenuChoice = scanner.nextInt();
+        Scanner scanner = new Scanner(System.in);
+        Menu.BookingMenu();
+
+        int BookingMenuChoice = scanner.nextInt();
         scanner.nextLine();
 
         switch (BookingMenuChoice) {
@@ -117,36 +117,26 @@ public class Main {
                 System.out.println("Invalid choice. Please select a valid option.");
                 break;
         }
-    	
     }
-        
+
     public static void RentCar() {
-    	Scanner scanner = new Scanner(System.in);
-    	
-    	//customer's details
-    	System.out.println("Enter customer's name:");
-    	String customerName = scanner.nextLine();
-    	System.out.println("Enter customer I/C number:");
-    	String customerIC = scanner.nextLine();
-    	System.out.println("Enter customer contact number:");
-    	int customerContact = scanner.nextInt();
-    	System.out.println("Enter customer license:");
-    	String customerLicense = scanner.nextLine();
-    	scanner.nextLine();
-    	
-    	//duratjtion 
-    	System.out.println("Enter rental start time(YYYY-MM-DD:");
-    	String startRenting = scanner.nextLine();
-    	System.out.println("Renting duration(day):");
-    	int RentingDuration = scanner.nextInt();
-    	
-    	
-    	
-    	
-    	System.out.println("The car had been successful rented");//x yet finish
-        }
+        Scanner scanner = new Scanner(System.in);
+
+        //customer's details
+        System.out.println("Enter customer's name:");
+        String customerName = scanner.nextLine();
+        System.out.println("Enter customer I/C number:");
+        String customerIC = scanner.nextLine();
+        System.out.println("Enter customer contact number:");
+        int customerContact = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Enter customer license:");
+        String customerLicense = scanner.nextLine();
+        // ...
+        System.out.println("The car has been successfully rented.");
+    }
 
     public static void CancelBooking() {
-            System.out.println("Booking had been canceled");//x yet finish
-        }
+        System.out.println("Booking has been canceled.");
+    }
 }

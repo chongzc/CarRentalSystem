@@ -1,5 +1,4 @@
-package TestRun;
-
+package CarRentalSystem;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -19,20 +18,21 @@ public class File1 {
         this.carsList = carsList;
     }
 
-    public void addCar(String model, int seat, String plateno, String power, String engine, String category, double rate) {
-        carsList.add(new CarManager(model, seat, plateno, power, engine, category, rate));
+    public void addCar(String model, int seat, String plateno, String power, String engine, String category, double rate, String status) {
+        carsList.add(new CarManager(model, seat, plateno, power, engine, category, rate, status));
     }
 
     public void saveToFile() throws IOException {
         try (FileWriter carWriter = new FileWriter(carFile, false)) {
             for (CarManager car : carsList) {
-                String line = String.format("%s,%d,%s,%s,%s,%s,%.2f\n", car.getModel(), car.getSeats(),
-                        car.getPlateno(), car.getPower(), car.getEngine(), car.getCategory(), car.getRate());
+                String line = String.format("%s,%d,%s,%s,%s,%s,%.2f,%s\n", car.getModel(), car.getSeats(),
+                        car.getPlateno(), car.getPower(), car.getEngine(), car.getCategory(), car.getRate(), car.getStatus());
 
                 carWriter.write(line);
             }
         }
     }
+
 
     public void loadFromFile() throws IOException {
         if (!carFile.exists()) {
@@ -46,7 +46,7 @@ public class File1 {
 
             while ((line = carReader.readLine()) != null) {
                 String[] carData = line.split(",");
-                if (carData.length == 7) {
+                if (carData.length == 8) {
                     String model = carData[0].trim();
                     int seats = Integer.parseInt(carData[1].trim());
                     String plateno = carData[2].trim();
@@ -54,8 +54,9 @@ public class File1 {
                     String engine = carData[4].trim();
                     String category = carData[5].trim();
                     double rate = Double.parseDouble(carData[6].trim());
+                    String status = carData[7].trim(); // Read status as a string
 
-                    carsList.add(new CarManager(model, seats, plateno, power, engine, category, rate));
+                    carsList.add(new CarManager(model, seats, plateno, power, engine, category, rate, status));
                 }
             }
         } finally {
@@ -64,20 +65,21 @@ public class File1 {
             }
         }
     }
-    
+
+
     public static void displayCars(String filePath) {
         String line = "";
 
-        System.out.println("-----------------------------------------------------------------------------------------------------------");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
         System.out.printf("%-15s || %-13s || %-15s || %-13s || %-15s || %-13s || %-13s%n","Model", "Seat", "Plate No", "Power", "Engine", "Category", "Rate/Day");
-        System.out.println("-----------------------------------------------------------------------------------------------------------");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(filePath));
 
             while ((line = br.readLine()) != null) {
                 String[] carData = line.split(",");
-                if (carData.length == 7) {
+                if (carData.length == 8) {
                     String model = carData[0].trim();
                     String seats = carData[1].trim();
                     String plateno = carData[2].trim();
@@ -85,9 +87,9 @@ public class File1 {
                     String engine = carData[4].trim();
                     String category = carData[5].trim();
                     String rate = carData[6].trim();
+                   
 
-                    System.out.printf("%-15s || %-13s || %-15s || %-13s || %-15s || %-13s || %.2f%n",
-                            model, seats, plateno, power, engine, category, Double.parseDouble(rate));
+                    System.out.printf("%-15s || %-13s || %-15s || %-13s || %-15s || %-13s || %.2f%n", model, seats, plateno, power, engine, category, Double.parseDouble(rate));
                 }
             }
             br.close();
@@ -97,7 +99,6 @@ public class File1 {
             e.printStackTrace();
         }
 
-        System.out.println("-----------------------------------------------------------------------------------------------------------");
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
     }
 }
-
