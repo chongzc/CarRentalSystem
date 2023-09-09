@@ -229,6 +229,26 @@ public class CarManager {
             System.out.println("Car not found with the specified plate no.");
         }
     }
+    
+    public static String findPath() {
+        String TextName = "car.txt";
+        String workingDirectory = System.getProperty("user.dir");
+        String absoluteFilePath = workingDirectory + File.separator + TextName;
+        return absoluteFilePath;
+    }
+    
+    public static void loadCarsData(ArrayList<CarManager> cars, FileManagement carFileManager) {
+        String filePath = findPath();
+        carFileManager = new FileManagement(filePath);
+
+        try {
+            carFileManager.loadFromFile();
+            cars = carFileManager.getListOfCars();
+        } catch (IOException e) {
+            System.out.println("Error loading data from file: " + e.getMessage());
+        }
+    }
+
 
 
 }

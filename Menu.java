@@ -6,6 +6,7 @@ public class Menu {
 	
 	private static ArrayList<CarManager> cars = new ArrayList<CarManager>();
     private static FileManagement carFileManager;
+    
 	
 	public static void Login(){
 		 boolean isVerified = false;
@@ -47,14 +48,14 @@ public class Menu {
     }
 	
 
-	public static String findPath() {
+/*	public static String findPath() {
         String TextName = "car.txt";
         String workingDirectory = System.getProperty("user.dir");
         String absoluteFilePath = workingDirectory + File.separator + TextName;
         return absoluteFilePath;
-    }
+    }*/
 		
-	public static void cars() {
+/*	public static void loadCarsData() {
         String filePath = findPath();
         carFileManager = new FileManagement(filePath);
 
@@ -64,10 +65,14 @@ public class Menu {
         } catch (IOException e) {
             System.out.println("Error loading data from file: " + e.getMessage());
         }
-    }
+    }*/
+    
 	
 	public static void CarMenu(Scanner scanner) {
-        Menu.displayCarMenu();
+       boolean loopCarMenu = true;
+	
+       while(loopCarMenu) {
+		Menu.displayCarMenu();
 
         Scanner sc = new Scanner(System.in);
         int ChooseCarMenu = sc.nextInt();
@@ -77,7 +82,7 @@ public class Menu {
                 CarManager.addCar(scanner, cars, carFileManager); // Pass Scanner and other parameters
                 break;
             case 2:
-                CarManager.displayCars(findPath());
+                CarManager.displayCars(CarManager.findPath());
                 break;
             case 3:
                 CarManager.removeCar(scanner, cars, carFileManager); // Pass Scanner and other parameters
@@ -88,10 +93,13 @@ public class Menu {
             case 5:
                 CarManager.updateStatus(scanner, cars); // Pass Scanner and cars ArrayList
                 break;
+            case 6:
+            	loopCarMenu = false;
             default:
                 System.out.println("Invalid choice. Please select a valid option.");
                 break;
         }
+       }
     }
 	
 	public static void displayBookingMenu() {

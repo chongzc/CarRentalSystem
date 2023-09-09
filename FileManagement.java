@@ -13,18 +13,15 @@ public class FileManagement {
     }
     
     
-    //getter of carlist
+    //
     public ArrayList<CarManager> getListOfCars() {
         return carsList;
     }
 
-    //setter of carlist
     public void setListOfCars(ArrayList<CarManager> carsList) {
         this.carsList = carsList;
     }
 
-    
-    //
     public void addCar(String model, int seat, String plateno, String power, String engine, String category, double rate, String status) {
         carsList.add(new CarManager(model, seat, plateno, power, engine, category, rate, status));
     }
