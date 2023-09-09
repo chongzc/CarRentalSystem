@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
+    Menu.Login();
     public static void main(String[] args) {
         // Initialize FileManagement and load car data
         String filePath = CarManager.findPath();
