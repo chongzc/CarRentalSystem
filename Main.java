@@ -4,11 +4,10 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-          Menu.Login();
         // Initialize FileManagement and load car data
         String filePath = CarManager.findPath();
         FileManagement carFileManager = new FileManagement(filePath);
-
+        BookingManagement bookingManager = new BookingManagement(null, null, null, null);
         // Load car data from the file
         try {
             carFileManager.loadFromFile();
@@ -81,11 +80,14 @@ public class Main {
                     		switch (bookingMenuChoice) 
                     		{
                         		case 1:
-                            		BookingManagement.registerCustomer();
+                            		BookingManagement.registerCustomer(scanner);
                             		BookingManagement.getDateDuration();
-                            		CarManager.searchCar(scanner, carFileManager.getListOfCars());
+                            		BookingManagement.selectCar(scanner, carFileManager.getListOfCars());
+                            		BookingManagement.storeBookingDetails();
+
                            		break;
                         		case 2:
+                        			BookingManagement.checkAvailability(scanner, carFileManager.getListOfCars());
                             
                             		break;
                         		case 3:
@@ -101,7 +103,7 @@ public class Main {
                     		}
                     }
                     break;
-                case 0:
+                case 3:
                     // Save car data and exit
                     try {
                         carFileManager.saveToFile();
