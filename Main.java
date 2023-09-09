@@ -95,9 +95,8 @@ public class Main {
                             		BookingManagement.CancelBooking(scanner);
                             		break;
                         		case 5:
-                            		System.out.println("Exiting program.");
-                            		scanner.close();
-                            		System.exit(0);
+                                    bookingMenuLoop = false;
+                        			break;
                         		default:
                             		System.out.println("Invalid choice. Please select a valid option.");
                             		break;
