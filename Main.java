@@ -69,8 +69,36 @@ public class Main {
                     }
                     break;
                 case 2:
-                    // Show booking menu
-                    Menu.BookingMenu(scanner);
+                    // Booking menu loop
+                    boolean bookingMenuLoop = true;
+                    while (bookingMenuLoop) {
+                        Menu.displayBookingMenu();
+                        
+                        int bookingMenuChoice = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline
+                        
+                    		switch (bookingMenuChoice) 
+                    		{
+                        		case 1:
+                            		BookingManagement.registerCustomer();
+                            		BookingManagement.getDateDuration();
+                            		CarManager.searchCar(scanner, carFileManager.getListOfCars());
+                           		break;
+                        		case 2:
+                            
+                            		break;
+                        		case 3:
+                            		BookingManagement.CancelBooking();
+                            		break;
+                        		case 4:
+                            		System.out.println("Exiting program.");
+                            		scanner.close();
+                            		System.exit(0);
+                        		default:
+                            		System.out.println("Invalid choice. Please select a valid option.");
+                            		break;
+                    		}
+                    }
                     break;
                 case 3:
                     // Save car data and exit
