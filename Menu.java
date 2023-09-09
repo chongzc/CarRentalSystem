@@ -4,10 +4,6 @@ import java.util.*;
 
 public class Menu {
 	
-	private static ArrayList<CarManager> cars = new ArrayList<CarManager>();
-    private static FileManagement carFileManager;
-    
-	
 	public static void Login(){
 		 boolean isVerified = false;
 	        Scanner scanner = new Scanner(System.in);
@@ -46,62 +42,7 @@ public class Menu {
         System.out.println( "6 - Quit");
         System.out.print  ( "Your choice: ");
     }
-	
-
-/*	public static String findPath() {
-        String TextName = "car.txt";
-        String workingDirectory = System.getProperty("user.dir");
-        String absoluteFilePath = workingDirectory + File.separator + TextName;
-        return absoluteFilePath;
-    }*/
-		
-/*	public static void loadCarsData() {
-        String filePath = findPath();
-        carFileManager = new FileManagement(filePath);
-
-        try {
-            carFileManager.loadFromFile();
-            cars = carFileManager.getListOfCars();
-        } catch (IOException e) {
-            System.out.println("Error loading data from file: " + e.getMessage());
-        }
-    }*/
-    
-	
-	public static void CarMenu(Scanner scanner) {
-       boolean loopCarMenu = true;
-	
-       while(loopCarMenu) {
-		Menu.displayCarMenu();
-
-        Scanner sc = new Scanner(System.in);
-        int ChooseCarMenu = sc.nextInt();
-
-        switch (ChooseCarMenu) {
-            case 1:
-                CarManager.addCar(scanner, cars, carFileManager); // Pass Scanner and other parameters
-                break;
-            case 2:
-                CarManager.displayCars(CarManager.findPath());
-                break;
-            case 3:
-                CarManager.removeCar(scanner, cars, carFileManager); // Pass Scanner and other parameters
-                break;
-            case 4:
-                CarManager.searchCar(scanner, cars); // Pass Scanner and cars ArrayList
-                break;
-            case 5:
-                CarManager.updateStatus(scanner, cars); // Pass Scanner and cars ArrayList
-                break;
-            case 6:
-            	loopCarMenu = false;
-            default:
-                System.out.println("Invalid choice. Please select a valid option.");
-                break;
-        }
-       }
-    }
-	
+			
 	public static void displayBookingMenu() {
         System.out.println( "Booking Menu");
         System.out.println( "1 - Rent a car");
@@ -110,42 +51,5 @@ public class Menu {
         System.out.print  ( "Your choice: ");
     }
 	
-	public static void BookingMenu(Scanner scanner) 
-	{
-        	Scanner sc = new Scanner(System.in);
-        	BookingManagement bookingManagement = new BookingManagement();
-
-        	while (true) 
-		{
-            		System.out.println("Booking Menu:");
-            		System.out.println("1. Rent a Car");
-           		System.out.println("2. Cancel Booking");
-           		System.out.println("3. Exit");
-            		System.out.print("Enter your choice: ");
-            		int choice = sc.nextInt();
-            		sc.nextLine(); // Consume the newline character
-
-            		switch (choice) 
-	    		{
-                		case 1:
-                    		bookingManagement.registerCustomer();
-                    		bookingManagement.getDateDuration();
-                   		break;
-                		case 2:
-                    
-                    		break;
-                		case 3:
-                    		bookingManagement.CancelBooking();
-                    		break;
-                		case 4:
-                    		System.out.println("Exiting program.");
-                    		scanner.close();
-                    		System.exit(0);
-                		default:
-                    		System.out.println("Invalid choice. Please select a valid option.");
-                    		break;
-            		}
-		}
-        }	
 
 }
