@@ -109,7 +109,7 @@ public class Menu {
     }
 	
     public static void BookingMenu(Scanner scanner) {
-    	Customers = new ArrayList<Customer>()
+    	BookingManagement.customers = new ArrayList<Customer>();
     	BookingManagement.registerCustomer();
     	BookingManagement.getDateDuration();
     	

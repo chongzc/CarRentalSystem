@@ -1,5 +1,3 @@
-package TestRun;
-
 public class Customer
 {
 	private String customerName;

@@ -34,7 +34,7 @@
 
         switch (BookingMenuChoice) {
             case 1:
-                BookingManagement.RentCar();
+            	BookingManagement.RentCar();
                 break;
             case 2:
                 BookingManagement.CancelBooking();

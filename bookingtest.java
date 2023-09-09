@@ -6,7 +6,7 @@ public class bookingtest {
         bookingManagement.registerCustomer();
 
         // Calculate and display date duration using user input
-        bookingManagement.calculateDateDuration();
+        bookingManagement.getDateDuration();
 
         // Display registered customers
         System.out.println("Registered Customers:");

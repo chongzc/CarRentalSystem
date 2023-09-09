@@ -61,22 +61,37 @@ public class BookingManagement
     }
     
     public static void getDateDuration() {
-        Scanner scanner = new Scanner(System.in);
+    	Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter the date start booking (dd/mm/yyyy): ");
-        startBook = scanner.nextLine();
+        String startBook = scanner.nextLine();
 
         System.out.print("Enter the date end booking (dd/mm/yyyy): ");
-        endBook = scanner.nextLine();
+        String endBook = scanner.nextLine();
 
-        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        // Define the date format pattern
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
+
+        // Check if the input date strings have single-digit days or months and add leading zeros if needed
+        if (startBook.split("/")[0].length() == 1) {
+            startBook = "0" + startBook;
+        }
+        if (startBook.split("/")[1].length() == 1) {
+            startBook = startBook.substring(0, 3) + "0" + startBook.substring(3);
+        }
+        if (endBook.split("/")[0].length() == 1) {
+            endBook = "0" + endBook;
+        }
+        if (endBook.split("/")[1].length() == 1) {
+            endBook = endBook.substring(0, 3) + "0" + endBook.substring(3);
+        }
 
         // Parse the input into LocalDate objects using the specified format
         LocalDate date1 = LocalDate.parse(startBook, inputFormatter);
         LocalDate date2 = LocalDate.parse(endBook, inputFormatter);
 
         // Calculate the duration between the two dates in days
-        durationInDays = Math.abs(date1.toEpochDay() - date2.toEpochDay());
+        long durationInDays = Math.abs(date1.toEpochDay() - date2.toEpochDay());
 
         // Define the date format pattern for displaying the result
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -88,7 +103,10 @@ public class BookingManagement
         scanner.close();
     }
     
-    
+    public static void RentCar()
+    {
+    	
+    }
 
     public static void CancelBooking() {
         System.out.println("Booking has been canceled.");
