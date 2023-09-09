@@ -80,20 +80,21 @@ public class Main {
                     		switch (bookingMenuChoice) 
                     		{
                         		case 1:
-                            		BookingManagement.registerCustomer(scanner);
+                        			BookingManagement.checkAvailability(scanner, carFileManager.getListOfCars());
+                           		break;
+                        		case 2:
+                        			BookingManagement.registerCustomer(scanner);
                             		BookingManagement.getDateDuration();
                             		BookingManagement.selectCar(scanner, carFileManager.getListOfCars());
                             		BookingManagement.storeBookingDetails();
-
-                           		break;
-                        		case 2:
-                        			BookingManagement.checkAvailability(scanner, carFileManager.getListOfCars());
-                            
                             		break;
                         		case 3:
+                        			BookingManagement.CheckBookingDetail(scanner, icNumber);
+                        			break;
+                        		case 4:
                             		BookingManagement.CancelBooking();
                             		break;
-                        		case 4:
+                        		case 5:
                             		System.out.println("Exiting program.");
                             		scanner.close();
                             		System.exit(0);
