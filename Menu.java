@@ -28,7 +28,7 @@ public class Menu {
         System.out.println( "Main Menu");
         System.out.println( "1 - Car Menu");
         System.out.println( "2 - Booking");
-        System.out.println( "0 - Exit");
+        System.out.println( "3 - Exit");
         System.out.print  ( "Your choice: ");
     }
 	
