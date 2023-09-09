@@ -9,7 +9,7 @@ public class CarManager {
     private String carEngine;
     private String carCategory;
     private double carRate;
-    private String carStatus;
+    private String carStatus = "Available";
 
     public String getModel() {
         return carModel;
