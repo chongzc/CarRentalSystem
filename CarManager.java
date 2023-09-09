@@ -134,7 +134,7 @@ public class CarManager {
     }
 
     public static void removeCar(Scanner input, ArrayList<CarManager> cars, FileManagement carFileManager) {
-        System.out.print("/n/nEnter the plate number of the car to remove: ");
+        System.out.print("\n\nEnter the plate number of the car to remove: ");
         String carToRemove = input.nextLine();
 
         boolean removed = false;

@@ -4,6 +4,9 @@ import java.util.*;
 
 public class Menu {
 	
+	private static ArrayList<CarManager> cars = new ArrayList<CarManager>();
+    private static FileManagement carFileManager;
+	
 	public static void Login(){
 		 boolean isVerified = false;
 	        Scanner scanner = new Scanner(System.in);
@@ -21,7 +24,7 @@ public class Menu {
 	            } else {
 	                System.out.println("Wrong username or password! Try again.");
 	            }
-	        }//login and verification
+	        }
 	}
 	
 	public static void MainMenu() {
@@ -43,13 +46,17 @@ public class Menu {
         System.out.print  ( "Your choice: ");
     }
 	
-    public static void CarMenu(Scanner scanner) {
-        ArrayList<CarManager> cars = new ArrayList<CarManager>();
-        String relativeFilePath = "car.txt";
-        String workingDirectory = System.getProperty("user.dir");
-        String absoluteFilePath = workingDirectory + File.separator + relativeFilePath;
 
-        FileManagement carFileManager = new FileManagement(absoluteFilePath);
+	public static String findPath() {
+        String TextName = "car.txt";
+        String workingDirectory = System.getProperty("user.dir");
+        String absoluteFilePath = workingDirectory + File.separator + TextName;
+        return absoluteFilePath;
+    }
+		
+	public static void cars() {
+        String filePath = findPath();
+        carFileManager = new FileManagement(filePath);
 
         try {
             carFileManager.loadFromFile();
@@ -57,47 +64,34 @@ public class Menu {
         } catch (IOException e) {
             System.out.println("Error loading data from file: " + e.getMessage());
         }
+    }
+	
+	public static void CarMenu(Scanner scanner) {
+        Menu.displayCarMenu();
 
-        boolean continueManagingCars = true;
+        Scanner sc = new Scanner(System.in);
+        int ChooseCarMenu = sc.nextInt();
 
-        while (continueManagingCars) {
-            Menu.displayCarMenu();
-
-            int choice = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (choice) {
-                case 1:
-                    CarManager.addCar(scanner, cars, carFileManager);
-                    break;
-                case 2:
-                    CarManager.displayCars(absoluteFilePath);
-                    break;
-                case 3:
-                    CarManager.removeCar(scanner, cars, carFileManager);
-                    break;
-                case 4:
-                    CarManager.searchCar(scanner, cars);
-                    break;
-                case 5:
-                    CarManager.updateStatus(scanner, cars); // Update Car Status
-                    break;
-                case 6:
-                    continueManagingCars = false;
-                    return;
-                default:
-                    System.out.println("Invalid choice. Please select a valid option.");
-                    break;
-            }
+        switch (ChooseCarMenu) {
+            case 1:
+                CarManager.addCar(scanner, cars, carFileManager); // Pass Scanner and other parameters
+                break;
+            case 2:
+                CarManager.displayCars(findPath());
+                break;
+            case 3:
+                CarManager.removeCar(scanner, cars, carFileManager); // Pass Scanner and other parameters
+                break;
+            case 4:
+                CarManager.searchCar(scanner, cars); // Pass Scanner and cars ArrayList
+                break;
+            case 5:
+                CarManager.updateStatus(scanner, cars); // Pass Scanner and cars ArrayList
+                break;
+            default:
+                System.out.println("Invalid choice. Please select a valid option.");
+                break;
         }
-
-        carFileManager.setListOfCars(cars);
-        try {
-            carFileManager.saveToFile();
-        } catch (IOException e) {
-            System.out.println("Error saving data to file: " + e.getMessage());
-        }
-
     }
 	
 	public static void displayBookingMenu() {

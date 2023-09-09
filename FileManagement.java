@@ -3,25 +3,35 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileManagement {
-    private ArrayList<CarManager> carsList = new ArrayList<CarManager>();
+    private ArrayList<CarManager> carsList = new ArrayList<CarManager>(); 
     private File carFile;
 
+    
+    //constructor
     public FileManagement(String carFile) {
         this.carFile = new File(carFile);
     }
-
+    
+    
+    //getter of carlist
     public ArrayList<CarManager> getListOfCars() {
         return carsList;
     }
 
+    //setter of carlist
     public void setListOfCars(ArrayList<CarManager> carsList) {
         this.carsList = carsList;
     }
 
+    
+    //
     public void addCar(String model, int seat, String plateno, String power, String engine, String category, double rate, String status) {
         carsList.add(new CarManager(model, seat, plateno, power, engine, category, rate, status));
     }
-
+    
+    
+    
+    //save to file method
     public void saveToFile() throws IOException {
         try (FileWriter carWriter = new FileWriter(carFile, false)) {
             for (CarManager car : carsList) {
@@ -33,7 +43,7 @@ public class FileManagement {
         }
     }
 
-
+    //load from file method
     public void loadFromFile() throws IOException {
         if (!carFile.exists()) {
             return;

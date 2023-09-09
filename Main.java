@@ -3,7 +3,7 @@
 	
 	public class Main {
 	    public static void main(String[] args) {
-	    	Menu.Login();
+	    	//Menu.Login();
 	    	Scanner scanner = new Scanner(System.in);
 	        Menu.MainMenu();//show the main menu from Menu class
 	        int mainMenuChoice = scanner.nextInt();
