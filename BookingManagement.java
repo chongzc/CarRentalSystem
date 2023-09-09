@@ -178,6 +178,36 @@ public class BookingManagement {
         }
     }
 
+	public static void CheckBookingDetail(Scanner input, String icNumber) throws IOException {
+    	System.out.print("Enter Customer IC: ");
+        icNumber = input.nextLine();
+        try (BufferedReader reader = new BufferedReader(new FileReader("bookingDetail.txt"))) {
+            String line;
+            boolean found = false;
+
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("%-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s%n", "Name", "IC", "Contact", "License", "Start", "End", "Duration", "Car", "Rental");
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
+
+            while ((line = reader.readLine()) != null) {
+                String[] bookingInfo = line.split(",");
+
+                // Check if the IC number from the file matches the input IC number
+                if (icNumber == bookingInfo[1]) {
+                    found = true;
+                    System.out.printf("%-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s%n",
+                            bookingInfo[0], bookingInfo[1], bookingInfo[2], bookingInfo[3],
+                            bookingInfo[4], bookingInfo[5], bookingInfo[6], bookingInfo[7], bookingInfo[8]);
+                }
+            }
+
+            if (!found) {
+                System.out.println("No booking details found for the specified IC number.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading booking details: " + e.getMessage());
+        }
+    }
     
 	public static void CancelBooking() {
 		// TODO Auto-generated method stub
