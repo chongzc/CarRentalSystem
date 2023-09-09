@@ -1,20 +1,27 @@
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         // Initialize FileManagement and load car data
-        String filePath = FileManagement.findPath();
+        String filePath = CarManager.findPath();
         FileManagement carFileManager = new FileManagement(filePath);
-        carFileManager.cars();
+
+        // Load car data from the file
+        try {
+            carFileManager.loadFromFile();
+        } catch (IOException e) {
+            System.out.println("Error loading car data from file: " + e.getMessage());
+            // Handle the exception gracefully
+        }
 
         // Initialize Scanner
         Scanner scanner = new Scanner(System.in);
 
-        // Show login menu and main menu
-        //Menu.Login();
-        
-        boolean mainMenuLoop = true; // Add a main menu loop
-        while (mainMenuLoop) { // Main menu loop
+        // Main menu loop
+        boolean mainMenuLoop = true;
+        while (mainMenuLoop) {
             Menu.MainMenu();
 
             int mainMenuChoice = scanner.nextInt();
@@ -45,7 +52,7 @@ public class Main {
                                 break;
                             case 4:
                                 // Search for a car
-                                CarManager.searchCar(scanner, carFileManager);
+                                CarManager.searchCar(scanner, carFileManager.getListOfCars());
                                 break;
                             case 5:
                                 // Update car status
@@ -66,7 +73,12 @@ public class Main {
                     Menu.BookingMenu(scanner);
                     break;
                 case 3:
-                    // Quit the main menu
+                    // Save car data and exit
+                    try {
+                        carFileManager.saveToFile();
+                    } catch (IOException e) {
+                        System.out.println("Error saving car data to file: " + e.getMessage());
+                    }
                     mainMenuLoop = false;
                     break;
                 default:
