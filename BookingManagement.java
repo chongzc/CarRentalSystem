@@ -178,9 +178,10 @@ public class BookingManagement {
         }
     }
 
-	public static void CheckBookingDetail(Scanner input, String icNumber) throws IOException {
-    	System.out.print("Enter Customer IC: ");
-        icNumber = input.nextLine();
+    public static void checkBookingDetail(Scanner input) throws IOException {
+        System.out.print("Enter Customer IC: ");
+        String icNumber = input.nextLine();
+        
         try (BufferedReader reader = new BufferedReader(new FileReader("bookingDetail.txt"))) {
             String line;
             boolean found = false;
@@ -193,7 +194,7 @@ public class BookingManagement {
                 String[] bookingInfo = line.split(",");
 
                 // Check if the IC number from the file matches the input IC number
-                if (icNumber == bookingInfo[1]) {
+                if (icNumber.equals(bookingInfo[1])) {
                     found = true;
                     System.out.printf("%-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s%n",
                             bookingInfo[0], bookingInfo[1], bookingInfo[2], bookingInfo[3],
