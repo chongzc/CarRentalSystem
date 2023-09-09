@@ -89,7 +89,7 @@ public class Main {
                             		BookingManagement.storeBookingDetails();
                             		break;
                         		case 3:
-                        			BookingManagement.CheckBookingDetail(scanner, icNumber);
+                        			BookingManagement.CheckBookingDetail(scanner);
                         			break;
                         		case 4:
                             		BookingManagement.CancelBooking();
