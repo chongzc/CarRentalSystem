@@ -36,7 +36,7 @@ public class BookingManagement {
     }
 
     public static double getRentCarPay() {
-        return rentCarPay;
+        return durationInDays*rentCarPay;
     }
     
     public static long getDuration() {
@@ -186,9 +186,9 @@ public class BookingManagement {
             String line;
             boolean found = false;
 
-            System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             System.out.printf("%-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s%n", "Name", "IC", "Contact", "License", "Start", "End", "Duration", "Car", "Rental");
-            System.out.println("------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
             while ((line = reader.readLine()) != null) {
                 String[] bookingInfo = line.split(",");
@@ -210,10 +210,53 @@ public class BookingManagement {
         }
     }
     
-	public static void CancelBooking() {
-		// TODO Auto-generated method stub
-		
-	}
+    public static void CancelBooking(Scanner input) {
+        System.out.print("Enter customer IC to remove booking: ");
+        String customerIC = input.nextLine();
+
+        try {
+            File inputFile = new File("bookingDetail.txt");
+
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            ArrayList<String> updatedBookingDetails = new ArrayList<>();
+
+            String lineToRemove;
+            boolean found = false;
+
+            // Read each line from the file and check if it contains the customer IC
+            while ((lineToRemove = reader.readLine()) != null) {
+                String[] bookingInfo = lineToRemove.split(",");
+
+                // If the line contains the customer IC, mark it as found and skip adding it to the updated list
+                if (bookingInfo.length >= 2 && customerIC.equals(bookingInfo[1].trim())) {
+                    found = true;
+                    continue;
+                }
+
+                // Add other lines to the updated list
+                updatedBookingDetails.add(lineToRemove);
+            }
+
+            reader.close();
+
+            if (found) {
+                // Rewrite the entire file with the updated booking details
+                BufferedWriter writer = new BufferedWriter(new FileWriter(inputFile));
+
+                for (String updatedBooking : updatedBookingDetails) {
+                    writer.write(updatedBooking + "\n");
+                }
+
+                writer.close();
+
+                System.out.println("Booking removed successfully.");
+            } else {
+                System.out.println("No booking found with the specified customer IC.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error removing booking: " + e.getMessage());
+        }
+    }
 	
 	
 }
