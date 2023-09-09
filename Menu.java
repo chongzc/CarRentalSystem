@@ -46,8 +46,9 @@ public class Menu {
 	public static void displayBookingMenu() {
         System.out.println( "Booking Menu");
         System.out.println( "1 - Rent a car");
-        System.out.println( "2 - Cancel booking");
-        System.out.println( "3 - Quit");
+        System.out.println( "2 - ");
+        System.out.println( "3 - Cancel Booking");
+        System.out.println( "4 - Quit");
         System.out.print  ( "Your choice: ");
     }
 	
