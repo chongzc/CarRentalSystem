@@ -1,6 +1,9 @@
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+
 
 public class BookingManagement {
     private static String customerName;
@@ -9,7 +12,7 @@ public class BookingManagement {
     private static String licenseInfo;
     private static String startDate;
     private static String endDate;
-    private static int duration;
+    private static long durationInDays;
     private static String rentCarNo;
     private static double rentCarPay;
 
@@ -34,6 +37,10 @@ public class BookingManagement {
 
     public static double getRentCarPay() {
         return rentCarPay;
+    }
+    
+    public static long getDuration() {
+    	return durationInDays;
     }
     
     public static void registerCustomer(Scanner scanner) {
@@ -87,7 +94,7 @@ public class BookingManagement {
         LocalDate date2 = LocalDate.parse(endDate, inputFormatter);
 
         // Calculate the duration between the two dates in days
-        long durationInDays = Math.abs(date1.toEpochDay() - date2.toEpochDay());
+        durationInDays = Math.abs(date1.toEpochDay() - date2.toEpochDay());
 
         // Define the date format pattern for displaying the result
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -154,7 +161,7 @@ public class BookingManagement {
         // Create a string with booking details
         String bookingDetail = customerName + "," + icNumber + "," + contactInfo + ","
                 + licenseInfo + "," + BookingManagement.getRentCarNo()+ "," + startDate + ","
-                + endDate + "," + duration + "," + BookingManagement.getRentCarPay();
+                + endDate + "," + getDuration() + "," + BookingManagement.getRentCarPay();
 
         // Save the booking detail to a file
         saveBookingDetailToFile(bookingDetail);
@@ -179,4 +186,3 @@ public class BookingManagement {
 	
 	
 }
-
