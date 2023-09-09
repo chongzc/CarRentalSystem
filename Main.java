@@ -89,10 +89,10 @@ public class Main {
                             		BookingManagement.storeBookingDetails();
                             		break;
                         		case 3:
-                        			BookingManagement.CheckBookingDetail(scanner);
+                        			BookingManagement.checkBookingDetail(scanner);
                         			break;
                         		case 4:
-                            		BookingManagement.CancelBooking();
+                            		BookingManagement.CancelBooking(scanner);
                             		break;
                         		case 5:
                             		System.out.println("Exiting program.");
