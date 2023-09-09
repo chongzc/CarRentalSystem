@@ -36,7 +36,7 @@ public class BookingManagement {
     }
 
     public static double getRentCarPay() {
-        return rentCarPay;
+        return durationInDays*rentCarPay;
     }
     
     public static long getDuration() {
