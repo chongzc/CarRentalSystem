@@ -108,14 +108,42 @@ public class Menu {
         System.out.print  ( "Your choice: ");
     }
 	
-    public static void BookingMenu(Scanner scanner) {
-    	BookingManagement.customers = new ArrayList<Customer>();
-    	BookingManagement.registerCustomer();
-    	BookingManagement.getDateDuration();
-    	
-    }
-	
+	public static void BookingMenu(Scanner scanner) 
+	{
+        	Scanner sc = new Scanner(System.in);
+        	BookingManagement bookingManagement = new BookingManagement();
 
-	
+        	while (true) 
+		{
+            		System.out.println("Booking Menu:");
+            		System.out.println("1. Rent a Car");
+           		System.out.println("2. Cancel Booking");
+           		System.out.println("3. Exit");
+            		System.out.print("Enter your choice: ");
+            		int choice = sc.nextInt();
+            		sc.nextLine(); // Consume the newline character
+
+            		switch (choice) 
+	    		{
+                		case 1:
+                    		bookingManagement.registerCustomer();
+                    		bookingManagement.getDateDuration();
+                   		break;
+                		case 2:
+                    
+                    		break;
+                		case 3:
+                    		bookingManagement.CancelBooking();
+                    		break;
+                		case 4:
+                    		System.out.println("Exiting program.");
+                    		scanner.close();
+                    		System.exit(0);
+                		default:
+                    		System.out.println("Invalid choice. Please select a valid option.");
+                    		break;
+            		}
+		}
+        }	
 
 }
