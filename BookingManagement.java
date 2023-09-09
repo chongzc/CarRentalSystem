@@ -108,8 +108,35 @@ public class BookingManagement
 
         scanner.close();
     }
-    
-    
+
+    public static void checkAvailability(Scanner input, ArrayList<CarManager> cars) {
+        System.out.print("Enter car model (Press Enter to skip): ");
+        String searchModel = input.nextLine().trim();
+        System.out.print("Enter number of seats (Press Enter to skip): ");
+        String seatsInput = input.nextLine().trim();
+
+        // List available cars matching the search criteria
+        ArrayList<CarManager> availableCars = new ArrayList<>();
+        for (CarManager car : cars) {
+            if (car.getStatus().equalsIgnoreCase("Available") &&
+                (searchModel.isEmpty() || car.getModel().equalsIgnoreCase(searchModel)) &&
+                (seatsInput.isEmpty() || Integer.toString(car.getSeats()).equals(seatsInput))) {
+                availableCars.add(car);
+            }
+        }
+
+        if (availableCars.isEmpty()) {
+            System.out.println("No matching available cars found.");
+        }
+
+        System.out.println("Available cars:");
+        System.out.println("----------------------------------------------------");
+        System.out.printf("%-15s || %-20s || %-15s%n", "Car Plate No", "Car Model", "Payment Rate");
+        System.out.println("----------------------------------------------------");
+        for (CarManager car : availableCars) {
+            System.out.printf("%-15s || %-20s || %-15.2f%n", car.getPlateno(), car.getModel(), car.getRate());
+        }
+    }    
 
     public static void CancelBooking() {
         System.out.println("Booking has been canceled.");
