@@ -178,10 +178,10 @@ public class BookingManagement {
         }
     }
 
-    public static void checkBookingDetail(Scanner input) throws IOException {
+    public static void checkBookingDetail(Scanner input) {
         System.out.print("Enter Customer IC: ");
         String icNumber = input.nextLine();
-        
+
         try (BufferedReader reader = new BufferedReader(new FileReader("bookingDetail.txt"))) {
             String line;
             boolean found = false;
