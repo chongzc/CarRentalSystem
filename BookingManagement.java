@@ -17,7 +17,6 @@ public class BookingManagement
     public static void registerCustomer(String customerName, String customerIC, String customerContact, String customerLicense) {
         Customer customer = new Customer(customerName, customerIC, customerContact, customerLicense);
         customers.add(customer);
-        System.out.println("Customer registered successfully!");
     }
 
     public ArrayList<Customer> getAllCustomers() {
@@ -61,7 +60,7 @@ public class BookingManagement
     }
     
     public static void getDateDuration() {
-    	Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter the date start booking (dd/mm/yyyy): ");
         String startBook = scanner.nextLine();
@@ -73,18 +72,25 @@ public class BookingManagement
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
 
         // Check if the input date strings have single-digit days or months and add leading zeros if needed
-        if (startBook.split("/")[0].length() == 1) {
-            startBook = "0" + startBook;
+        String[] startParts = startBook.split("/");
+        String[] endParts = endBook.split("/");
+        
+        if (startParts[0].length() == 1) {
+            startParts[0] = "0" + startParts[0];
         }
-        if (startBook.split("/")[1].length() == 1) {
-            startBook = startBook.substring(0, 3) + "0" + startBook.substring(3);
+        if (startParts[1].length() == 1) {
+            startParts[1] = "0" + startParts[1];
         }
-        if (endBook.split("/")[0].length() == 1) {
-            endBook = "0" + endBook;
+        if (endParts[0].length() == 1) {
+            endParts[0] = "0" + endParts[0];
         }
-        if (endBook.split("/")[1].length() == 1) {
-            endBook = endBook.substring(0, 3) + "0" + endBook.substring(3);
+        if (endParts[1].length() == 1) {
+            endParts[1] = "0" + endParts[1];
         }
+
+        // Reconstruct the corrected date strings
+        startBook = String.join("/", startParts);
+        endBook = String.join("/", endParts);
 
         // Parse the input into LocalDate objects using the specified format
         LocalDate date1 = LocalDate.parse(startBook, inputFormatter);
@@ -103,10 +109,7 @@ public class BookingManagement
         scanner.close();
     }
     
-    public static void RentCar()
-    {
-    	
-    }
+    
 
     public static void CancelBooking() {
         System.out.println("Booking has been canceled.");
