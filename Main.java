@@ -22,28 +22,5 @@
 	        }
 	            scanner.close();
 	     }
-	        
-
-	        
-    public static void Booking() {
-        Scanner scanner = new Scanner(System.in);
-        Menu.BookingMenu(scanner);
-
-        int BookingMenuChoice = scanner.nextInt();
-        scanner.nextLine();
-
-        switch (BookingMenuChoice) {
-            case 1:
-            	BookingManagement.RentCar();
-                break;
-            case 2:
-                BookingManagement.CancelBooking();
-                break;
-            default:
-                System.out.println("Invalid choice. Please select a valid option.");
-                break;
-        }
-    }
-
-    
+	           
 }
