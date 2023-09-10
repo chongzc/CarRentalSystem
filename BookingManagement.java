@@ -14,6 +14,7 @@ public class BookingManagement {
     private static String endDate;
     private static long durationInDays;
     private static String rentCarNo;
+    private static String rentCarModel;
     private static double rentCarPay;
 
     public BookingManagement(String customerName, String icNumber, String contactInfo, String licenseInfo, String startData, String endData, long durationInDays2, String rentCarNo2, double rentCarPay2) {
@@ -35,6 +36,10 @@ public class BookingManagement {
         return rentCarNo;
     }
 
+    public static String getRentCarModel() {
+        return rentCarModel;
+    }
+	
     public static double getRentCarPay() {
         return rentCarPay;
     }
@@ -144,6 +149,7 @@ public class BookingManagement {
             {
                 rentCarNo = car.getPlateno();
                 rentCarPay = car.getRate();
+		rentCarModel = car.getModel();
                 car.setStatus("Not Available"); // Update car status to Not Available
                 
                 select = true;
@@ -166,13 +172,14 @@ public class BookingManagement {
     }
     
     // Method to store booking details and save to a file
+    // Method to store booking details and save to a file
     public static void storeBookingDetails() {
         // Implement code to store booking details into an array or object.
         // Include customer details, chosen car details, booking dates, duration, and payment rate.
 
         // Create a string with booking details
         String bookingDetail = customerName + "," + icNumber + "," + contactInfo + ","
-                + licenseInfo + "," + BookingManagement.getRentCarNo()+ "," + startDate + ","
+                + licenseInfo + "," + BookingManagement.getRentCarNo() + "," + BookingManagement.getRentCarModel() +"," + startDate + ","
                 + endDate + "," + getDuration() + "," + BookingManagement.getRentCarPay();
 
         // Save the booking detail to a file
