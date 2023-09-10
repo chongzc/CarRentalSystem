@@ -7,7 +7,7 @@ public class Main {
         // Initialize FileManagement and load car data
         String filePath = CarManager.findPath();
         FileManagement carFileManager = new FileManagement(filePath);
-        BookingManagement bookingManager = new BookingManagement(null, null, null, null);
+        BookingManagement bookingManager = new BookingManagement(null, null, null, null, filePath, filePath, 0, filePath, 0);
         // Load car data from the file
         try {
             carFileManager.loadFromFile();
@@ -56,7 +56,7 @@ public class Main {
                                 break;
                             case 5:
                                 // Update car status
-                                CarManager.updateStatus(scanner, carFileManager.getListOfCars());
+                                CarManager.updateStatus(scanner, carFileManager.getListOfCars(), carFileManager);
                                 break;
                             case 6:
                                 // Quit car menu

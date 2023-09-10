@@ -16,7 +16,7 @@ public class BookingManagement {
     private static String rentCarNo;
     private static double rentCarPay;
 
-    public BookingManagement(String customerName, String icNumber, String contactInfo, String licenseInfo) {
+    public BookingManagement(String customerName, String icNumber, String contactInfo, String licenseInfo, String startData, String endData, long durationInDays2, String rentCarNo2, double rentCarPay2) {
         this.customerName = customerName;
         this.icNumber = icNumber;
         this.contactInfo = contactInfo;

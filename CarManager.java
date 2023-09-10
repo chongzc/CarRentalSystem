@@ -187,7 +187,7 @@ public class CarManager {
         }
     }
     
-    public static void updateStatus(Scanner input, ArrayList<CarManager> cars) {
+    public static void updateStatus(Scanner input, ArrayList<CarManager> cars, FileManagement carFileManager) {
         System.out.println("-----------------------------------------------------------------------");
         System.out.printf("%-15s || %-15s || %-15s%n", "Car Model", "Car Plate No", "Car Status");
         System.out.println("-----------------------------------------------------------------------");
@@ -227,6 +227,14 @@ public class CarManager {
 
         if (!updated) {
             System.out.println("Car not found with the specified plate no.");
+        } else {
+            // After updating the car status, save the changes to the file
+            carFileManager.setListOfCars(cars);
+            try {
+                carFileManager.saveToFile();
+            } catch (IOException e) {
+                System.out.println("Error saving data to file: " + e.getMessage());
+            }
         }
     }
     
