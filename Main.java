@@ -85,14 +85,14 @@ public class Main {
                         		case 2:
                         			BookingManagement.registerCustomer(scanner);
                             		BookingManagement.getDateDuration();
-                            		BookingManagement.selectCar(scanner, carFileManager.getListOfCars());
+                            		BookingManagement.selectCar(scanner, carFileManager.getListOfCars(), carFileManager);
                             		BookingManagement.storeBookingDetails();
                             		break;
                         		case 3:
-                        			BookingManagement.checkBookingDetail(scanner);
+                        			BookingManagement.checkBookingDetail(scanner, carFileManager.getListOfCars());
                         			break;
                         		case 4:
-                            		BookingManagement.CancelBooking(scanner);
+                            		BookingManagement.CancelBooking(scanner, carFileManager.getListOfCars(), carFileManager);
                             		break;
                         		case 5:
                                     bookingMenuLoop = false;
