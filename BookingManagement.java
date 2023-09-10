@@ -149,7 +149,7 @@ public class BookingManagement {
             {
                 rentCarNo = car.getPlateno();
                 rentCarPay = car.getRate();
-		rentCarModel = car.getModel();
+                rentCarModel = car.getModel();
                 car.setStatus("Not Available"); // Update car status to Not Available
                 
                 select = true;
@@ -180,7 +180,7 @@ public class BookingManagement {
         // Create a string with booking details
         String bookingDetail = customerName + "," + icNumber + "," + contactInfo + ","
                 + licenseInfo + "," + BookingManagement.getRentCarNo() + "," + BookingManagement.getRentCarModel() +"," + startDate + ","
-                + endDate + "," + getDuration() + "," + BookingManagement.getRentCarPay();
+                + endDate + "," + BookingManagement.getDuration() + "," + BookingManagement.getRentCarPay();
 
         // Save the booking detail to a file
         saveBookingDetailToFile(bookingDetail);
@@ -197,39 +197,40 @@ public class BookingManagement {
         }
     }
 
-    public static void checkBookingDetail(Scanner input) {
+    public static void checkBookingDetail(Scanner input,ArrayList<CarManager> cars) {
         System.out.print("Enter Customer IC: ");
         String icNumber = input.nextLine();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("bookingDetail.txt"))) {
+        try {
+        	BufferedReader reader = new BufferedReader(new FileReader("bookingDetail.txt"));
             String line;
             boolean found = false;
 
-            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
-            System.out.printf("%-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s%n", "Name", "IC", "Contact", "License", "Start", "End", "Duration", "Car", "Rental");
-            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("%-15s || %-15s || %-15s || %-15s || %-15s || %-25s || %-15s || %-15s ||  %-15s || %-15s%n", "Name", "IC", "Contact", "License", "PlateNo", "Car", "Start", "End", "Duration", "Rate");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
             while ((line = reader.readLine()) != null) {
                 String[] bookingInfo = line.split(",");
-
+                
                 // Check if the IC number from the file matches the input IC number
-                if (icNumber.equals(bookingInfo[1])) {
+                if (bookingInfo.length >= 5 && icNumber.equals(bookingInfo[1].trim())) {
                     found = true;
-                    System.out.printf("%-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s || %-15s%n",
+                    System.out.printf("%-15s || %-15s || %-15s || %-15s || %-15s || %-25s || %-15s || %-15s || %-16s || %-15s%n",
                             bookingInfo[0], bookingInfo[1], bookingInfo[2], bookingInfo[3],
-                            bookingInfo[4], bookingInfo[5], bookingInfo[6], bookingInfo[7], bookingInfo[8]);
+                            bookingInfo[4], bookingInfo[5], bookingInfo[6], bookingInfo[7], bookingInfo[8], bookingInfo[9]);
                 }
             }
 
             if (!found) {
                 System.out.println("No booking details found for the specified IC number.");
             }
-        } catch (IOException e) {
+            }catch (IOException e) {
             System.out.println("Error reading booking details: " + e.getMessage());
         }
     }
     
-    public static void CancelBooking(Scanner input) {
+    public static void CancelBooking(Scanner input, ArrayList<CarManager> cars, FileManagement carFileManager) {
         System.out.print("Enter customer IC to remove booking: ");
         String customerIC = input.nextLine();
 
@@ -249,6 +250,15 @@ public class BookingManagement {
                 // If the line contains the customer IC, mark it as found and skip adding it to the updated list
                 if (bookingInfo.length >= 2 && customerIC.equals(bookingInfo[1].trim())) {
                     found = true;
+
+                    // Find the corresponding car and update its status
+                    for (CarManager car : cars) {
+                        if (car.getPlateno().equals(bookingInfo[4].trim())) {
+                            car.setStatus("Available");
+                            break; // Assuming each car has a unique registration number
+                        }
+                    }
+
                     continue;
                 }
 
@@ -267,6 +277,13 @@ public class BookingManagement {
                 }
 
                 writer.close();
+                
+                carFileManager.setListOfCars(cars);
+                try {
+                    carFileManager.saveToFile();
+                } catch (IOException e) {
+                    System.out.println("Error saving data to file: " + e.getMessage());
+                }
 
                 System.out.println("Booking removed successfully.");
             } else {
@@ -276,6 +293,5 @@ public class BookingManagement {
             System.out.println("Error removing booking: " + e.getMessage());
         }
     }
-	
-	
+
 }
