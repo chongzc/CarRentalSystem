@@ -5,7 +5,8 @@ public class Customer
 	private static String customerIC;
 	private static String customerContact;
 	private String customerLicense;
-	
+
+	//constructor
 	Customer(String customerName,String customerIC, String customerContact, String customerLicense)
 	{
 		this.customerName = customerName;
@@ -13,7 +14,8 @@ public class Customer
 		this.customerContact = customerContact;
 		this.customerLicense = customerLicense;
 	}
-	
+
+	//getter & setter
 	public static String getCustomerName()
 	{
 		return customerName;
