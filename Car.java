@@ -1,6 +1,6 @@
 package CarRentalSystem;
 public class Car {
-	private String carModel;
+    private String carModel;
     private int carSeats;
     private String carPlateno;
     private String carPower;
@@ -8,7 +8,8 @@ public class Car {
     private String carCategory;
     private double carRate;
     private String carStatus = "Available";
-
+    
+    //setter & getter
     public String getModel() {
         return carModel;
     }
@@ -44,7 +45,7 @@ public class Car {
     public void setStatus(String status) {
         carStatus = status;
     }
-
+    //Constructor
     public Car(String model, int seat, String plateno, String power, String engine, String category, double rate) {
         carModel = model;
         carSeats = seat;
@@ -54,7 +55,7 @@ public class Car {
         carCategory = category;
         carRate = rate;
     }
-
+    //Constructor
     public Car(String model, int seat, String plateno, String power, String engine, String category, double rate, String status) {
         carModel = model;
         carSeats = seat;
