@@ -1,13 +1,15 @@
+package CarRentalSystem;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+public class Main implements Continuity{
     public static void main(String[] args) {
+        Menu.Login();
         // Initialize FileManagement and load car data
         String filePath = CarManager.findPath();
         FileManagement carFileManager = new FileManagement(filePath);
-        BookingManagement bookingManager = new BookingManagement(null, null, null, null, filePath, filePath, 0, filePath, 0);
+        BookingManagement bookingManager = new BookingManagement();
         // Load car data from the file
         try {
             carFileManager.loadFromFile();
@@ -85,8 +87,15 @@ public class Main {
                         		case 2:
                         			BookingManagement.registerCustomer(scanner);
                             		BookingManagement.getDateDuration();
-                            		BookingManagement.selectCar(scanner, carFileManager.getListOfCars(), carFileManager);
+                                    boolean carSelected = false;
+                                    while (!carSelected) {
+                                        carSelected = BookingManagement.selectCar(scanner, carFileManager.getListOfCars(), carFileManager);
+                                        if (!carSelected) {
+                                            System.out.println("Returning to the booking menu.");
+                                        }
+                                    }
                             		BookingManagement.storeBookingDetails();
+                                    Continuity.backMenu();
                             		break;
                         		case 3:
                         			BookingManagement.checkBookingDetail(scanner, carFileManager.getListOfCars());
@@ -104,7 +113,60 @@ public class Main {
                     }
                     break;
                 case 3:
-                    // Save car data and exit
+               	 boolean pickupReturnLoop = true;
+                    while (pickupReturnLoop) {
+                        Menu.displayPickupReturnMenu();
+                        int pickupReturnChoice = scanner.nextInt();
+                        scanner.nextLine();
+                        
+                        switch (pickupReturnChoice) {
+                            case 1://Pickup
+                            	PickupReturn pickupReturn = new PickupReturn(scanner, carFileManager.getListOfCars(), carFileManager);
+                                pickupReturn.pickupCar(scanner, carFileManager.getListOfCars(), carFileManager);
+                                break;
+                                 
+                            case 2://Return
+                                PickupReturn pickupReturn1 = new PickupReturn(scanner, carFileManager.getListOfCars(), carFileManager);
+                                pickupReturn1.returnCar(scanner, carFileManager.getListOfCars(), carFileManager);
+                                break;
+                            case 3:
+                                pickupReturnLoop = false; // Quit payment menu
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please select a valid option.");
+                                break;
+                        }
+                    }
+                    break;
+                case 4:
+                    // Payment menu loop
+                    boolean historyMenuLoop = true;
+                    while (historyMenuLoop) {
+                        Menu.displayHistoryMenu();
+                        int historyMenuChoice = scanner.nextInt();
+                        scanner.nextLine();
+                        
+                        switch (historyMenuChoice) {
+                            case 1:
+                                //View Booking History
+                                PickupReturn.displayBookingHistory("bookingHistory.txt");
+                                break;
+                            case 2:
+                                // View Payment History
+                            	PickupReturn.displayPaymentHistory("paymentHistory.txt");
+                                break;
+                            case 3:
+                                historyMenuLoop = false; // Quit payment menu
+                                break;
+                            default:
+                                System.out.println("Invalid choice. Please select a valid option.");
+                                break;
+                        }
+                    }
+                    break;
+
+               
+                     case 5:
                     try {
                         carFileManager.saveToFile();
                     } catch (IOException e) {
@@ -116,6 +178,7 @@ public class Main {
                     System.out.println("Invalid choice. Please select a valid option.");
                     break;
             }
+
         }
 
         // Close the scanner
