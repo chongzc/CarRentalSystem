@@ -1,15 +1,17 @@
 package CarRentalSystem;
 public class User 
 {
-	private static String username = "username";
-	private static String password = "password";
+	private static String username = "username";//username to login is set as "username" 
+	private static String password = "password";//password to login is set as "password"
 	
-	public User(String username, String password)
+	public User(String username, String password)//constructor
 	{
 		this.username = username;
 		this.password = password;
 	}
-	
+
+
+	//getter & setter
 	public static String getUsername()
 	{
 		return username;
