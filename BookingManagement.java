@@ -1,4 +1,3 @@
-package CarRentalSystem;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -68,25 +67,67 @@ public class BookingManagement implements Continuity{
     
     public static void registerCustomer(Scanner scanner) {
         System.out.println("Customer Registration");
-        System.out.print("Enter customer name: ");
-        customerName = scanner.nextLine();
-        System.out.print("Enter customer IC: ");
-        icNumber = scanner.nextLine();
-        System.out.print("Enter customer contact: ");
-        contactInfo = scanner.nextLine();
-        System.out.print("Enter customer license: ");
-        licenseInfo = scanner.nextLine();
+        
+        System.out.print("Enter customer name (or 'x' to exit): ");
+        String customerName = scanner.nextLine();
+        
+        if (customerName.equalsIgnoreCase("x")) {
+            System.out.println("\nExiting customer registration.");
+            Continuity.backMenu();
+            return;
+        }
+        
+        System.out.print("Enter customer IC (or 'x' to exit): ");
+        String icNumber = scanner.nextLine();
+        
+        if (icNumber.equalsIgnoreCase("x")) {
+            System.out.println("\nExiting customer registration.");
+            Continuity.backMenu();
+            return;
+        }
+        
+        System.out.print("Enter customer contact (or 'x' to exit): ");
+        String contactInfo = scanner.nextLine();
+        
+        if (contactInfo.equalsIgnoreCase("x")) {
+            System.out.println("\nExiting customer registration.");
+            Continuity.backMenu();
+            return;
+        }
+        
+        System.out.print("Enter customer license (or 'x' to exit): ");
+        String licenseInfo = scanner.nextLine();
+        
+        if (licenseInfo.equalsIgnoreCase("x")) {
+            System.out.println("\nExiting customer registration.");
+            Continuity.backMenu();
+            return;
+        }
+        
         System.out.println("Customer registered successfully!");
+        
+        // Perform any further actions needed for customer registration
     }
+
     
     public static void getDateDuration() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter the date start booking (dd/mm/yyyy): ");
-        startDate = scanner.nextLine();
+        System.out.print("Enter the date start booking (dd/mm/yyyy) (or 'x' to exit): ");
+        String startDate = scanner.nextLine();
 
-        System.out.print("Enter the date end booking (dd/mm/yyyy): ");
-        endDate = scanner.nextLine();
+        if (startDate.equalsIgnoreCase("x")) {
+            System.out.println("\nExiting date entry.");
+            return;
+        }
+
+        System.out.print("Enter the date end booking (dd/mm/yyyy) (or 'x' to exit): ");
+        String endDate = scanner.nextLine();
+
+        if (endDate.equalsIgnoreCase("x")) {
+            System.out.println("\nExiting date entry.");
+            return;
+        }
 
         // Define the date format pattern
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
@@ -117,7 +158,7 @@ public class BookingManagement implements Continuity{
         LocalDate date2 = LocalDate.parse(endDate, inputFormatter);
 
         // Calculate the duration between the two dates in days
-        durationInDays = Math.abs(date1.toEpochDay() - date2.toEpochDay())+1;
+        long durationInDays = Math.abs(date1.toEpochDay() - date2.toEpochDay()) + 1;
 
         // Define the date format pattern for displaying the result
         DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -125,51 +166,84 @@ public class BookingManagement implements Continuity{
         // Display the result with the new format
         System.out.println("Duration between the two dates: " + outputFormatter.format(date1) +
                 " and " + outputFormatter.format(date2) + " is " + durationInDays + " days");
-        scanner.close();
         
+        scanner.close();
     }
+
 
     public static void checkAvailability(Scanner input, ArrayList<CarManager> cars) {
-    	System.out.println("Press Enter twice to show all available car for booking.: ");
-        System.out.print("Enter car model (Press Enter to skip): ");
-        String searchModel = input.nextLine().trim();
-        System.out.print("Enter number of seats (Press Enter to skip): ");
-        String seatsInput = input.nextLine().trim();
+        System.out.println("Press 'x' to return to the menu at any time.");
+        System.out.println("Press Enter twice to show all available car for booking.");
+        
+        String searchModel = "";
+        String seatsInput = "";
+        
+        while (true) {
+            System.out.print("Enter car model (Press Enter to skip): ");
+            searchModel = input.nextLine().trim();
 
-        // List available cars matching the search criteria
-        ArrayList<CarManager> availableCars = new ArrayList<>();
-        for (CarManager car : cars) {
-            if (car.getStatus().equalsIgnoreCase("Available") &&
-                (searchModel.isEmpty() || car.getModel().equalsIgnoreCase(searchModel)) &&
-                (seatsInput.isEmpty() || Integer.toString(car.getSeats()).equals(seatsInput))) {
-                availableCars.add(car);
+            if (searchModel.equalsIgnoreCase("x")) {
+                System.out.println("\nReturning to the menu.");
+                Continuity.backMenu();
+                return;
+            }
+
+            System.out.print("Enter number of seats (Press Enter to skip): ");
+            seatsInput = input.nextLine().trim();
+
+            if (seatsInput.equalsIgnoreCase("x")) {
+                System.out.println("\nReturning to the menu.");
+                Continuity.backMenu();
+                return;
+            }
+
+            // List available cars matching the search criteria
+            ArrayList<CarManager> availableCars = new ArrayList<>();
+            for (CarManager car : cars) {
+                if (car.getStatus().equalsIgnoreCase("Available") &&
+                    (searchModel.isEmpty() || car.getModel().equalsIgnoreCase(searchModel)) &&
+                    (seatsInput.isEmpty() || Integer.toString(car.getSeats()).equals(seatsInput))) {
+                    availableCars.add(car);
+                }
+            }
+
+            if (availableCars.isEmpty()) {
+                System.out.println("No matching available cars found.");
+            }
+
+            System.out.println("Available cars:");
+            System.out.println("-------------------------------------------------------------------");
+            System.out.printf("%-15s || %-20s || %-15s%n", "Car Plate No", "Car Model", "Payment Rate");
+            System.out.println("-------------------------------------------------------------------");
+            for (CarManager car : availableCars) {
+                System.out.printf("%-15s || %-20s || %-15.2f%n", car.getPlateno(), car.getModel(), car.getRate());
+            }
+            System.out.println("-------------------------------------------------------------------");
+
+            System.out.print("\nPress 'x' to return to the menu or any other key to search again: ");
+            String exitChoice = input.nextLine().trim();
+            if (exitChoice.equalsIgnoreCase("x")) {
+                System.out.println("\nReturning to the menu.");
+                Continuity.backMenu();
+                return;
             }
         }
-
-        if (availableCars.isEmpty()) {
-            System.out.println("No matching available cars found.");
-        }
-
-        System.out.println("Available cars:");
-        System.out.println("-------------------------------------------------------------------");
-        System.out.printf("%-15s || %-20s || %-15s%n", "Car Plate No", "Car Model", "Payment Rate");
-        System.out.println("-------------------------------------------------------------------");
-        for (CarManager car : availableCars) {
-            System.out.printf("%-15s || %-20s || %-15.2f%n", car.getPlateno(), car.getModel(), car.getRate());
-        }
-        System.out.println("-------------------------------------------------------------------");
-        Continuity.backMenu();
     }
 
+
     public static boolean selectCar(Scanner input, ArrayList<CarManager> cars, FileManagement carFileManager) {
-        System.out.print("Enter the plate number of the car you want to select: ");
+        System.out.print("Enter the plate number of the car you want to select (or 'x' to exit): ");
         String plateNumber = input.nextLine();
         boolean select = false;
 
+        if (plateNumber.equalsIgnoreCase("x")) {
+            System.out.println("\nExiting car selection.");
+            return false; // Indicate that the user chose to exit car selection
+        }
+
         // Find the car with the specified plate number
         for (CarManager car : cars) {
-            if (car.getPlateno().equalsIgnoreCase(plateNumber) && car.getStatus().equalsIgnoreCase("Available")) 
-            {
+            if (car.getPlateno().equalsIgnoreCase(plateNumber) && car.getStatus().equalsIgnoreCase("Available")) {
                 rentCarNo = car.getPlateno();
                 rentCarPay = car.getRate();
                 rentCarModel = car.getModel();
@@ -194,6 +268,7 @@ public class BookingManagement implements Continuity{
 
         return select;
     }
+
     
     // Method to store booking details and save to a file
     // Method to store booking details and save to a file
