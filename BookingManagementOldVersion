@@ -117,34 +117,58 @@ public class BookingManagement {
     }
 
     public static void checkAvailability(Scanner input, ArrayList<CarManager> cars) {
-        System.out.print("Enter car model (Press Enter to skip): ");
-        String searchModel = input.nextLine().trim();
-        System.out.print("Enter number of seats (Press Enter to skip): ");
-        String seatsInput = input.nextLine().trim();
+        System.out.println("Press 'x' to return to the menu at any time.");
+        System.out.println("Press Enter twice to show all available car for booking.");
+        
+        String searchModel = "";
+        String seatsInput = "";
+        
+        while (true) {
+            System.out.print("Enter car model (Press Enter to skip): ");
+            searchModel = input.nextLine().trim();
 
-        // List available cars matching the search criteria
-        ArrayList<CarManager> availableCars = new ArrayList<>();
-        for (CarManager car : cars) {
-            if (car.getStatus().equalsIgnoreCase("Available") &&
-                (searchModel.isEmpty() || car.getModel().equalsIgnoreCase(searchModel)) &&
-                (seatsInput.isEmpty() || Integer.toString(car.getSeats()).equals(seatsInput))) {
-                availableCars.add(car);
+            if (searchModel.equalsIgnoreCase("x")) {
+                System.out.println("\nReturning to the menu.");
+                Continuity.backMenu();
+                return;
+            }
+
+            System.out.print("Enter number of seats (Press Enter to skip): ");
+            seatsInput = input.nextLine().trim();
+
+            if (seatsInput.equalsIgnoreCase("x")) {
+                System.out.println("\nReturning to the menu.");
+                Continuity.backMenu();
+                return;
+            }
+
+            // List available cars matching the search criteria
+            ArrayList<CarManager> availableCars = new ArrayList<>();
+            for (CarManager car : cars) {
+                if (car.getStatus().equalsIgnoreCase("Available") &&
+                    (searchModel.isEmpty() || car.getModel().equalsIgnoreCase(searchModel)) &&
+                    (seatsInput.isEmpty() || Integer.toString(car.getSeats()).equals(seatsInput))) {
+                    availableCars.add(car);
+                }
+            }
+
+            if (availableCars.isEmpty()) {
+                System.out.println("No matching available cars found.");
+            }
+
+            System.out.println("Available cars:");
+            System.out.println("-------------------------------------------------------------------");
+            System.out.printf("%-15s || %-20s || %-15s%n", "Car Plate No", "Car Model", "Payment Rate");
+            System.out.println("-------------------------------------------------------------------");
+            for (CarManager car : availableCars) {
+                System.out.printf("%-15s || %-20s || %-15.2f%n", car.getPlateno(), car.getModel(), car.getRate());
+            }
+            System.out.println("-------------------------------------------------------------------");
+            Continuity.backMenu();
+            return;
             }
         }
-
-        if (availableCars.isEmpty()) {
-            System.out.println("No matching available cars found.");
-        }
-
-        System.out.println("Available cars:");
-        System.out.println("----------------------------------------------------");
-        System.out.printf("%-15s || %-20s || %-15s%n", "Car Plate No", "Car Model", "Payment Rate");
-        System.out.println("----------------------------------------------------");
-        for (CarManager car : availableCars) {
-            System.out.printf("%-15s || %-20s || %-15.2f%n", car.getPlateno(), car.getModel(), car.getRate());
-        }
-        System.out.println();
-    }
+    
 
     public static boolean selectCar(Scanner input, ArrayList<CarManager> cars, FileManagement carFileManager) {
         System.out.print("Enter the plate number of the car you want to select: ");
